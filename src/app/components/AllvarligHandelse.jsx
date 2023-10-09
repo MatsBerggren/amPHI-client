@@ -1,0 +1,70 @@
+import { Button } from "@mui/material";
+import React, { Fragment, useState } from "react";
+
+const AllvarligHandelse = () => {
+
+    const buttonsArray = [
+        {
+            text: "Ja",
+            id: '1',
+            variant: 'outlined'
+        },
+        {
+            text: "Nej",
+            id: '2',
+            variant: 'outlined'
+        }
+    ]
+
+    const [buttons, setButtons] = useState(buttonsArray)
+
+    function toggleVariant(variant) {
+        if (variant === "contained") {
+            return "outlined"
+        } else {
+            return "contained"
+        }
+    }
+
+    function handleClick(id) {
+        setButtons(
+            buttons.map((button) => (button.id === id)
+                ? {
+                    ...button, variant: "contained"
+                }
+                : {
+                    ...button, variant: "outlined"
+                }
+            )
+        )
+    }
+
+    return (
+        <Fragment>
+            <div className="container">
+                <div className="labels">
+                    <label>
+                        Misstänkt allvarlig händelse:
+                    </label>
+                </div>
+                <div className="input-tab">
+                    {buttons.map(buttons => {
+                        return (
+                            <Button
+                                sx={{ m: 0.5 }}
+                                id={buttons.id}
+                                type="button"
+                                variant={buttons.variant}
+                                onClick={() => { handleClick(buttons.id) }}
+                            >
+                                {buttons.text}
+                            </Button>
+                        )
+                    })}
+                </div>
+            </div>
+        </Fragment>
+    );
+};
+
+export default AllvarligHandelse;

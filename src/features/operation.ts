@@ -29,14 +29,14 @@ if (!EvamApi.isRunningInVehicleServices) {
             evam.injectOperation(Operation.fromJSON(
                 {
                     operationID: "56",
-                    patientName: "Test Testkort",
+                    patientName: "Nisse Hult",
                     operationState: OperationState.ACTIVE,
                     patientUID: "900608-2381",
                     callCenterId: "18",
                     caseFolderId: "1",
                     prio: "PRIO 1",
                     vehicleStatus: {
-                        name: "Test status",
+                        name: "Ambulans 1247EKA",
                         event: undefined,
                         successorName: undefined,
                         isStartStatus: false,

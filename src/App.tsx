@@ -1,32 +1,15 @@
 import './App.css';
 
-import {setActiveCase} from './features/operation';
-import {store} from './app/store';
-import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import {APP_COLORS} from "./colors";
-import * as React from "react";
-import {
-    Archive,
-    CarCrash,
-    Home, Notifications,
-} from "@mui/icons-material";
-import {MainView} from "./app/presentation/MainView";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import {MenuOption1View} from "./app/presentation/MenuOption1View";
-import {MenuOption2View} from "./app/presentation/MenuOption2View";
-import {EvamApi} from "@evam-life/sdk";
-import {
-    EvamAppBarLayout
-} from "@evam-life/sdk/sdk/component/appbar/EvamAppBarLayout";
-import {EvamTabs} from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
-import {EvamTab} from "@evam-life/sdk/sdk/component/appbar/EvamTab";
-import {
-    EvamHamburgerMenu
-} from "@evam-life/sdk/sdk/component/appbar/EvamHamburgerMenu";
-import {EvamMenuItem} from "@evam-life/sdk/sdk/component/appbar/EvamMenuItem";
-import {
-    formatRoutePathByMenuId
-} from "@evam-life/sdk/sdk/component/appbar/utils/formatRoutePathByMenuId";
+import { setActiveCase } from './features/operation';
+import { store } from './app/store';
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { Info, Summarize } from "@mui/icons-material";
+import { MainView } from "./app/presentation/MainView";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { EvamApi } from "@evam-life/sdk";
+import { EvamAppBarLayout } from "@evam-life/sdk/sdk/component/appbar/EvamAppBarLayout";
+import { EvamTabs } from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
+import { EvamTab } from "@evam-life/sdk/sdk/component/appbar/EvamTab";
 
 // Get Evam SDK instance
 const evam = new EvamApi()
@@ -45,9 +28,43 @@ evam.onNewOrUpdatedSettings((settings) => {
  * Main app component
  */
 function App() {
+
+    // Define colors
+    const APP_COLORS = {
+        day: {
+            black0: "#000000",
+            black0_5: "#17181B",
+            black1: "#202124",
+            black2: "#282A2D",
+            black3: "#2E3134",
+            black4: "#3C4043",
+            //orange_primary: "#FF5F5E",
+            orange_primary: "#FF7B52",
+            orange_secondary: "#FF7B52",
+            orange_tertiary: "#FFBCA9",
+            blue1: "#0857C3",
+            blue2: "#5C88DA",
+            red1: "#E10600"
+        },
+        night: {
+            black0: "#000000",
+            black0_5: "#0E1013",
+            black1: "#17181B",
+            black2: "#202124",
+            black3: "#282A2D",
+            black4: "#2E3134",
+            orange_primary: "#FF5F5E",
+            orange_secondary: "#FF7B52",
+            orange_tertiary: "#FFBCA9",
+            blue1: "#0857C3",
+            blue2: "#5C88DA",
+            red1: "#E10600"
+        }
+    }
+
     const palette = APP_COLORS.day
 
-    // App theme
+    // Define theme
     const theme = createTheme({
         transitions: {
             duration: {
@@ -91,7 +108,7 @@ function App() {
         },
         typography: {
             body1: {
-                fontSize: "28px"
+                fontSize: "16px"
             },
             h4: {
                 marginBottom: "12px"
@@ -108,32 +125,19 @@ function App() {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
-                <CssBaseline/>
+                <CssBaseline />
                 <Router>
                     <EvamAppBarLayout tabs={
                         <EvamTabs>
-                            <EvamTab label={"Home"} index={0} icon={<Home fontSize={"large"}/>}/>
-                            <EvamTab label={"Notification API"} index={1} icon={<Notifications fontSize={"large"}/>}/>
-                            <EvamTab label={"Operation API"} index={2} icon={<CarCrash fontSize={"large"}/>}/>
+                            <EvamTab label={"Framkomstrapport"} index={0} icon={<Summarize fontSize={"medium"} />} />
+                            <EvamTab label={"Verifieringsrapport"} index={1} icon={<Summarize fontSize={"medium"} />} />
+                            <EvamTab label={"Status"} index={2} icon={<Info fontSize={"medium"} />} />
                         </EvamTabs>
-                    } extraFunction={
-                        <EvamHamburgerMenu  sx={{backdropFilter: "blur(5px)"}}>
-                            <Box height={600} width={500}>
-                                <EvamMenuItem id={"Option 1"}>Menu option 1</EvamMenuItem>
-                                <EvamMenuItem id={"Option 2"}>Menu option 2</EvamMenuItem>
-                            </Box>
-                        </EvamHamburgerMenu>
-                    }>
+                    } >
                         <Routes>
                             <Route path={"/"} element={
-                                <MainView/>
-                            }/>
-                            <Route
-                                path={formatRoutePathByMenuId("Option 1")}
-                                element={<MenuOption1View/>}/>
-                            <Route
-                                path={formatRoutePathByMenuId("Option 2")}
-                                element={<MenuOption2View/>}/>
+                                <MainView />
+                            } />
                         </Routes>
                     </EvamAppBarLayout>
                 </Router>

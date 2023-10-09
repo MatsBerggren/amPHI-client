@@ -8,6 +8,32 @@
   pointer-events: none;
 }
 
+.container {
+  margin: auto;
+  width: 100%;
+  padding: .5em;
+}
+
+.input-tab {
+  display: inline-block;
+  text-align: left;
+  width: 70%;
+  margin-left: 10px;
+}
+
+.labels {
+  display: inline-block;
+  text-align: right;
+  width: 20%;
+  vertical-align: top;
+}
+
+.btn {
+  width: 100%;
+  text-align: center;
+  margin: 20px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
