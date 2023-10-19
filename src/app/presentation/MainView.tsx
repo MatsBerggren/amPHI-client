@@ -1,5 +1,3 @@
-import { useAppSelector } from "../hooks";
-import { selectActiveCase } from "../../features/operation";
 import { EvamTabPanel } from "@evam-life/sdk/sdk/component/appbar/EvamTabPanel";
 import { Button, Typography } from "@mui/material";
 import { EvamApi, Notification, NotificationType } from "@evam-life/sdk";
@@ -13,7 +11,6 @@ import ExtraResurser from "../components/ExtraResurser";
 import Status from "../components/Status";
 
 export function MainView() {
-    const activeCase = useAppSelector(selectActiveCase)
 
     return (
         <div>
@@ -32,6 +29,9 @@ export function MainView() {
                 </div>
             </EvamTabPanel>
             <EvamTabPanel index={1}>
+                <Status/>
+           </EvamTabPanel>
+           <EvamTabPanel index={2}>
                 <div>
                     <Typography variant={"h2"}>Notification API
                         example</Typography>
@@ -62,9 +62,6 @@ export function MainView() {
                     }}>Send notification</Button>
                 </div>
             </EvamTabPanel>
-            <EvamTabPanel index={2}>
-                <Status/>
-           </EvamTabPanel>
         </div>
     )
 }

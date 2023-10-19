@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import type {RootState} from '../app/store'
-import {EvamApi, Operation} from "@evam-life/sdk";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import type { RootState } from '../app/store'
+import { EvamApi, Operation } from "@evam-life/sdk";
 import OperationState from "@evam-life/sdk/sdk/domain/OperationState";
 
 interface ActiveOperationState {
@@ -19,7 +19,7 @@ if (!EvamApi.isRunningInVehicleServices) {
     setTimeout(
         () => {
             evam.injectSettings(
-                {debug: true}
+                { debug: true }
             )
         }, 3000
     )
@@ -29,14 +29,16 @@ if (!EvamApi.isRunningInVehicleServices) {
             evam.injectOperation(Operation.fromJSON(
                 {
                     operationID: "56",
-                    patientName: "Nisse Hult",
+                    patientName: "Torsten Test",
                     operationState: OperationState.ACTIVE,
-                    patientUID: "900608-2381",
+                    patientUID: "19750705-1234",
                     callCenterId: "18",
                     caseFolderId: "1",
                     prio: "PRIO 1",
+                    alarmCategory: "Trafikolycka",
+                    additionalInfo: "Trafikolycka, bil krockat med moped",
                     vehicleStatus: {
-                        name: "Ambulans 1247EKA",
+                        name: "311 9630",
                         event: undefined,
                         successorName: undefined,
                         isStartStatus: false,
@@ -47,11 +49,11 @@ if (!EvamApi.isRunningInVehicleServices) {
                     destinationSiteLocation: {
                         latitude: 59.35393,
                         longitude: 17.973795,
-                        street: "Vretenvägen 13"
+                        street: "Fogdemyrsgatan 3"
                     },
-                    name: "Test operation",
-                    sendTime: (new Date()).getTime() / 1000,
-                    createdTime: (new Date()).getTime() / 1000,
+                    name: "Trafikolycka",
+                    sendTime: (new Date()).getTime() - 1000 * 60 * 10,
+                    createdTime: (new Date()).getTime() - 1000 * 60 * 10,
                 }
             ))
         }, 5000
@@ -69,7 +71,7 @@ export const activeOperationSlice = createSlice({
     }
 })
 
-export const {setActiveCase} = activeOperationSlice.actions
+export const { setActiveCase } = activeOperationSlice.actions
 
 export const selectActiveCase = (state: RootState) => state.activeCase.value
 

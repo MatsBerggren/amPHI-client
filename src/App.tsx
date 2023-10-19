@@ -129,9 +129,8 @@ function App() {
                 <Router>
                     <EvamAppBarLayout tabs={
                         <EvamTabs>
-                            <EvamTab label={"Framkomstrapport"} index={0} icon={<Summarize fontSize={"medium"} />} />
-                            <EvamTab label={"Verifieringsrapport"} index={1} icon={<Summarize fontSize={"medium"} />} />
-                            <EvamTab label={"Status"} index={2} icon={<Info fontSize={"medium"} />} />
+                            <EvamTab label={"Vindruterapport"} index={0} icon={<Summarize fontSize={"medium"} />} />
+                            <EvamTab label={"Status"} index={1} icon={<Info fontSize={"medium"} />} />
                         </EvamTabs>
                     } >
                         <Routes>

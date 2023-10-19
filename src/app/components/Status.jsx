@@ -10,12 +10,18 @@ const Status = () => {
     return (
         <Fragment>
             <div className="container">
-                <Typography variant={"h4"}>Activt ärende</Typography>
+                <Typography variant={"h4"}>Aktivt ärende</Typography>
                 <div className="labels">
                     <Typography variant={"body1"}>Aktuellt ärende:</Typography>
                 </div>
                 <div className="input-tab">
                     <Typography variant={"body1"}>{activeCase ? `${activeCase.name} (${activeCase.getFullId()})` : "Inget aktivt ärende"}</Typography>
+                </div>
+                <div className="labels">
+                    <Typography variant={"body1"}>Beskrivning:</Typography>
+                </div>
+                <div className="input-tab">
+                    <Typography variant={"body1"}>{activeCase ? `${activeCase.additionalInfo}` : ""}</Typography>
                 </div>
                 <div className="labels">
                     <Typography variant={"body1"}>Skickat:</Typography>
@@ -48,16 +54,16 @@ const Status = () => {
                     <Typography variant={"body1"}>{activeCase ? `${activeCase.destinationSiteLocation.street}` : ""}</Typography>
                 </div>
                 <div className="labels">
-                    <Typography variant={"body1"}>Tillgängliga sjukhus:</Typography>
+                    <Typography variant={"body1"}>amPHI Status:</Typography>
                 </div>
                 <div className="input-tab">
-                    <Typography variant={"body1"}>{activeCase ? `${activeCase.availableHospitalLocations}` : ""}</Typography>
+                    <Typography variant={"body1"}>Ansluten</Typography>
                 </div>
                 <div className="labels">
                     <Typography variant={"body1"}>Valt sjukhus:</Typography>
                 </div>
                 <div className="input-tab">
-                    <Typography variant={"body1"}>{activeCase ? `${activeCase.availableHospitalLocations}` : ""}</Typography>
+                    <Typography variant={"body1"}>Sunderby sjukhus</Typography>
                 </div>
                 <div className="labels">
                     <Typography variant={"body1"}>Ärende status:</Typography>
