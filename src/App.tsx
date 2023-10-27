@@ -1,15 +1,15 @@
 import './App.css';
 
-import { setActiveCase } from './features/operation';
-import { store } from './app/store';
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { Info, Summarize } from "@mui/icons-material";
-import { MainView } from "./app/presentation/MainView";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { EvamApi } from "@evam-life/sdk";
 import { EvamAppBarLayout } from "@evam-life/sdk/sdk/component/appbar/EvamAppBarLayout";
-import { EvamTabs } from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
 import { EvamTab } from "@evam-life/sdk/sdk/component/appbar/EvamTab";
+import { EvamTabs } from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
+import { Info, Summarize } from "@mui/icons-material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { MainView } from "./app/presentation/MainView";
+import { store } from './app/store';
+import { setActiveCase } from './features/operation';
 
 // Get Evam SDK instance
 const evam = new EvamApi()
@@ -18,6 +18,7 @@ evam.onNewOrUpdatedActiveOperation((operation) => {
     // On new active operation, update redux store
     let payload = setActiveCase(operation)
     store.dispatch(payload)
+    createUser();
 })
 
 evam.onNewOrUpdatedSettings((settings) => {
@@ -144,5 +145,51 @@ function App() {
         </div>
     );
 }
+
+type CreateUserResponse = {
+    name: string;
+    job: string;
+    id: string;
+    createdAt: string;
+  };
+  
+  async function createUser() {
+    try {
+      // 👇️ const response: Response
+      const response = await fetch('http://localhost/api/rest/', {
+        method: 'POST',
+        body: JSON.stringify({
+            name: '1',
+            mode: '2',
+            equipment: '3',
+            exercises: '4',
+            trainerTips: '5',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+  
+      // 👇️ const result: CreateUserResponse
+      const result = (await response.json()) as CreateUserResponse;
+  
+      console.log('result is: ', JSON.stringify(result, null, 4));
+  
+      return result;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log('error message: ', error.message);
+        return error.message;
+      } else {
+        console.log('unexpected error: ', error);
+        return 'An unexpected error occurred';
+      }
+    }
+  }
 
 export default App;

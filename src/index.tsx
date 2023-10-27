@@ -1,19 +1,20 @@
-import React from 'react';
+import { VehicleServicesDevelopmentEnvironment } from "@evam-life/sdk";
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { Provider } from 'react-redux';
 import App from './App';
+import { store } from './app/store';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {Provider} from 'react-redux'
-import {store} from './app/store';
-import {VehicleServicesDevelopmentEnvironment} from "@evam-life/sdk";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
+    <VehicleServicesDevelopmentEnvironment>
         <Provider store={store}>
-            <App/>
+            <App />
         </Provider>
+    </VehicleServicesDevelopmentEnvironment>
 );
 
 // If you want to start measuring performance in your app, pass a function

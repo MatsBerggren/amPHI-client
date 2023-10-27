@@ -18,14 +18,6 @@ const AllvarligHandelse = () => {
 
     const [buttons, setButtons] = useState(buttonsArray)
 
-    function toggleVariant(variant) {
-        if (variant === "contained") {
-            return "outlined"
-        } else {
-            return "contained"
-        }
-    }
-
     function handleClick(id) {
         setButtons(
             buttons.map((button) => (button.id === id)

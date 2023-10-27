@@ -58,6 +58,74 @@ if (!EvamApi.isRunningInVehicleServices) {
             ))
         }, 5000
     )
+    setTimeout(
+        () => {
+            evam.injectOperation(Operation.fromJSON(
+                {
+                    operationID: "57",
+                    patientName: "Torsten Test",
+                    operationState: OperationState.ACTIVE,
+                    patientUID: "19750705-1235",
+                    callCenterId: "18",
+                    caseFolderId: "1",
+                    prio: "PRIO 1",
+                    alarmCategory: "Trafikolycka",
+                    additionalInfo: "Trafikolycka, bil krockat med moped",
+                    vehicleStatus: {
+                        name: "311 9630",
+                        event: undefined,
+                        successorName: undefined,
+                        isStartStatus: false,
+                        isEndStatus: false,
+                        categoryType: "other",
+                        categoryName: "test",
+                    },
+                    destinationSiteLocation: {
+                        latitude: 59.35393,
+                        longitude: 17.973795,
+                        street: "Fogdemyrsgatan 3"
+                    },
+                    name: "Trafikolycka",
+                    sendTime: (new Date()).getTime() - 1000 * 60 * 10,
+                    createdTime: (new Date()).getTime() - 1000 * 60 * 10,
+                }
+            ))
+        }, 10000
+    )
+    setTimeout(
+        () => {
+            evam.injectOperation(Operation.fromJSON(
+                {
+                    operationID: "58",
+                    patientName: "Torsten Test",
+                    operationState: OperationState.ACTIVE,
+                    patientUID: "19750705-1236",
+                    callCenterId: "18",
+                    caseFolderId: "1",
+                    prio: "PRIO 1",
+                    alarmCategory: "Trafikolycka",
+                    additionalInfo: "Trafikolycka, bil krockat med moped",
+                    vehicleStatus: {
+                        name: "311 9630",
+                        event: undefined,
+                        successorName: undefined,
+                        isStartStatus: false,
+                        isEndStatus: false,
+                        categoryType: "other",
+                        categoryName: "test",
+                    },
+                    destinationSiteLocation: {
+                        latitude: 59.35393,
+                        longitude: 17.973795,
+                        street: "Fogdemyrsgatan 3"
+                    },
+                    name: "Trafikolycka",
+                    sendTime: (new Date()).getTime() - 1000 * 60 * 10,
+                    createdTime: (new Date()).getTime() - 1000 * 60 * 10,
+                }
+            ))
+        }, 15000
+    )
     // You can add more events like the one above here to be run afterward
 }
 

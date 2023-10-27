@@ -1,7 +1,6 @@
 import { useAppSelector } from "../hooks";
-import { Button, Typography } from "@mui/material";
-import React, { Fragment, useState } from "react";
-import { EvamApi, Notification, NotificationType } from "@evam-life/sdk";
+import { Typography } from "@mui/material";
+import { Fragment } from "react";
 import { selectActiveCase } from "../../features/operation";
 
 const Status = () => {
