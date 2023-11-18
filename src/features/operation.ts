@@ -63,7 +63,7 @@ if (!EvamApi.isRunningInVehicleServices) {
             evam.injectOperation(Operation.fromJSON(
                 {
                     operationID: "57",
-                    patientName: "Torsten Test",
+                    patientName: "Pisse Nisse",
                     operationState: OperationState.ACTIVE,
                     patientUID: "19750705-1235",
                     callCenterId: "18",
@@ -97,7 +97,7 @@ if (!EvamApi.isRunningInVehicleServices) {
             evam.injectOperation(Operation.fromJSON(
                 {
                     operationID: "58",
-                    patientName: "Torsten Test",
+                    patientName: "Ola Salo",
                     operationState: OperationState.ACTIVE,
                     patientUID: "19750705-1236",
                     callCenterId: "18",

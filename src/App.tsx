@@ -1,6 +1,6 @@
 import './App.css';
 
-import { EvamApi } from "@evam-life/sdk";
+import { EvamApi, Operation } from "@evam-life/sdk";
 import { EvamAppBarLayout } from "@evam-life/sdk/sdk/component/appbar/EvamAppBarLayout";
 import { EvamTab } from "@evam-life/sdk/sdk/component/appbar/EvamTab";
 import { EvamTabs } from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
@@ -18,7 +18,7 @@ evam.onNewOrUpdatedActiveOperation((operation) => {
     // On new active operation, update redux store
     let payload = setActiveCase(operation)
     store.dispatch(payload)
-    createUser();
+    createOperation(operation);
 })
 
 evam.onNewOrUpdatedSettings((settings) => {
@@ -153,18 +153,14 @@ type CreateUserResponse = {
     createdAt: string;
   };
   
-  async function createUser() {
+  async function createOperation(operation: Operation | undefined) {
     try {
       // 👇️ const response: Response
-      const response = await fetch('http://localhost/api/rest/', {
+      var obj = {"json":JSON.stringify(operation), "operationid":operation?.operationID};
+      console.log(obj)
+      const response = await fetch('http://192.168.72.161:8080/api/operations', {
         method: 'POST',
-        body: JSON.stringify({
-            name: '1',
-            mode: '2',
-            equipment: '3',
-            exercises: '4',
-            trainerTips: '5',
-        }),
+        body: JSON.stringify(obj),
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
