@@ -87,7 +87,8 @@ const ExtraResurser = () => {
                 <div className="input-tab">
                     {buttons.map(buttons => {
                         return (
-                            <div style={{
+                            <div key={buttons.id}
+                                style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 flexWrap: 'wrap',

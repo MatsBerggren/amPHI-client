@@ -43,8 +43,9 @@ const AnkomstvagHindrad = () => {
                     {buttons.map(buttons => {
                         return (
                             <Button
+                                key={"AnkomstvagHindrad" + buttons.id}
                                 sx={{ m: 0.5 }}
-                                id={buttons.id}
+                                id={"AnkomstvagHindrad" + buttons.id}
                                 type="button"
                                 variant={buttons.variant}
                                 onClick={() => { handleClick(buttons.id) }}

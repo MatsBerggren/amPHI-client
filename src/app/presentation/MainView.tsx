@@ -1,18 +1,17 @@
-import { EvamTabPanel } from "@evam-life/sdk/sdk/component/appbar/EvamTabPanel";
-import { Button, TextField, Typography } from "@mui/material";
 import { EvamApi, Notification, NotificationType } from "@evam-life/sdk";
+import { EvamTabPanel } from "@evam-life/sdk/sdk/component/appbar/EvamTabPanel";
+import { Button, Typography } from "@mui/material";
 import AllvarligHandelse from "../components/AllvarligHandelse";
 import AnkomstvagHindrad from "../components/AnkomstvagHindrad";
-import HotRisker from "../components/HotRisker";
-import TypAvHandelse from "../components/TypAvHandelse";
 import ExaktLokalisation from "../components/ExaktLokalisation";
-import NumerarAvDrabbade from "../components/NumerarAvDrabbade";
 import ExtraResurser from "../components/ExtraResurser";
+import HotRisker from "../components/HotRisker";
+import MethaneReport from "../components/MethaneReport";
+import NumerarAvDrabbade from "../components/NumerarAvDrabbade";
 import Status from "../components/Status";
-import React, { useState } from "react";
+import TypAvHandelse from "../components/TypAvHandelse";
 
 export function MainView() {
-    const evamApi = new EvamApi();  
 
     return (
         <div>
@@ -31,9 +30,9 @@ export function MainView() {
                 </div>
             </EvamTabPanel>
             <EvamTabPanel index={1}>
-                <Status/>
-           </EvamTabPanel>
-           <EvamTabPanel index={2}>
+                <MethaneReport />
+            </EvamTabPanel>
+            <EvamTabPanel index={2}>
                 <div>
                     <Typography variant={"h2"}>Notification API
                         example</Typography>

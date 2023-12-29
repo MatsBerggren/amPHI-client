@@ -9,10 +9,8 @@ const ExaktLokalisation = () => {
                 <div className="labels">
                     <label>
                         Exakt lokalisation:
+                    <TextField id="outlined-basic" text="true" variant="outlined" value="Fogdemyrsgatan 3"></TextField>
                     </label>
-                </div>
-                <div className="input-tab">
-                    <TextField id="outlined-basic" text variant="outlined" value="Fogdemyrsgatan 3"></TextField>
                 </div>
             </div>
         </Fragment>

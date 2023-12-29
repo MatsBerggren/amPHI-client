@@ -95,8 +95,9 @@ const TypAvHandelse = () => {
                     {buttons.map(buttons => {
                         return (
                             <Button
+                                key={"TypAvHandelse" + buttons.id}
                                 sx={{ m: 0.5 }}
-                                id={buttons.id}
+                                id={"TypAvHandelse" + buttons.id}
                                 type="button"
                                 variant={buttons.variant}
                                 onClick={() => { handleClick(buttons.id) }}

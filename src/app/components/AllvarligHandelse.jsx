@@ -43,8 +43,9 @@ const AllvarligHandelse = () => {
                     {buttons.map(buttons => {
                         return (
                             <Button
+                                key={"AllvarligHandelse" + buttons.id}
                                 sx={{ m: 0.5 }}
-                                id={buttons.id}
+                                id={"AllvarligHandelse" + buttons.id}
                                 type="button"
                                 variant={buttons.variant}
                                 onClick={() => { handleClick(buttons.id) }}
