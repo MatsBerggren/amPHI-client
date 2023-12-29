@@ -33,6 +33,7 @@ const MyForm: React.FC = () => {
                     <input
                         type="text"
                         name="name"
+                        disabled={false}
                         value={formData.name}
                         onChange={handleChange}
                     />

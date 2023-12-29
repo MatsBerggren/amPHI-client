@@ -8,7 +8,6 @@ import ExtraResurser from "../components/ExtraResurser";
 import HotRisker from "../components/HotRisker";
 import MethaneReport from "../components/MethaneReport";
 import NumerarAvDrabbade from "../components/NumerarAvDrabbade";
-import Status from "../components/Status";
 import TypAvHandelse from "../components/TypAvHandelse";
 
 export function MainView() {
