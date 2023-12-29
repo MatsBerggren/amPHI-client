@@ -22,27 +22,27 @@ evam.onNewOrUpdatedActiveOperation((operation) => {
     if (operation?.operationID) {
         operation.selectedHospital=1;
         operation.selectedPriority=1;
-        sendOperation(operation);
+        //sendOperation(operation);
     }
 })
 evam.onNewOrUpdatedAvailableVehicleStatusList((vehicleStatusList) => {
     console.log("Got vehicle status: " + JSON.stringify(vehicleStatusList))
     if ((vehicleStatusList?.length ?? 0) > 0) {
-        sendAvailableVehicleStatusList(vehicleStatusList);
+        //sendAvailableVehicleStatusList(vehicleStatusList);
     }
 });
 
 evam.onNewOrUpdatedRakelState((rakelState) => {
     console.log("Got rakel state: " + JSON.stringify(rakelState))
     if (rakelState?.msisdn) {
-        sendRakelState(rakelState);
+        //sendRakelState(rakelState);
     }
 });
 
 evam.onNewOrUpdatedVehicleState((vehicleState) => {
     console.log("Got vehicle state: " + JSON.stringify(vehicleState))
     if (vehicleState?.activeCaseFullId) {
-        sendState(vehicleState);
+        //sendState(vehicleState);
     }
 });
 
@@ -53,7 +53,7 @@ evam.onNewOrUpdatedSettings((settings) => {
 evam.onNewOrUpdatedTripLocationHistory((tripLocationHistory) => {
     console.log("Got trip location history: " + JSON.stringify(tripLocationHistory))
     if (tripLocationHistory?.etaSeconds) {
-        sendTripLocationHistory(tripLocationHistory);
+        //sendTripLocationHistory(tripLocationHistory);
     }
 });
 

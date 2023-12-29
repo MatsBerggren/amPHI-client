@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Fragment } from "react";
+import React, { Fragment, useState } from 'react';
 
 interface FormData {
     name: string;
@@ -33,7 +32,6 @@ const MyForm: React.FC = () => {
                     <input
                         type="text"
                         name="name"
-                        disabled={false}
                         value={formData.name}
                         onChange={handleChange}
                     />
