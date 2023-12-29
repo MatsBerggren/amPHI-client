@@ -1,6 +1,6 @@
 import './App.css';
 
-import { EvamApi, Operation } from "@evam-life/sdk";
+import { EvamApi, Operation, RakelState, TripLocationHistory, VehicleState, VehicleStatus } from "@evam-life/sdk";
 import { EvamAppBarLayout } from "@evam-life/sdk/sdk/component/appbar/EvamAppBarLayout";
 import { EvamTab } from "@evam-life/sdk/sdk/component/appbar/EvamTab";
 import { EvamTabs } from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
@@ -17,14 +17,52 @@ const evam = new EvamApi()
 evam.onNewOrUpdatedActiveOperation((operation) => {
     // On new active operation, update redux store
     let payload = setActiveCase(operation)
+    console.log("Got Operation: " + JSON.stringify(operation))
     store.dispatch(payload)
-    createOperation(operation);
+    if (operation?.operationID) {
+        operation.selectedHospital=1;
+        operation.selectedPriority=1;
+        sendOperation(operation);
+    }
 })
+evam.onNewOrUpdatedAvailableVehicleStatusList((vehicleStatusList) => {
+    console.log("Got vehicle status: " + JSON.stringify(vehicleStatusList))
+    if ((vehicleStatusList?.length ?? 0) > 0) {
+        sendAvailableVehicleStatusList(vehicleStatusList);
+    }
+});
+
+evam.onNewOrUpdatedRakelState((rakelState) => {
+    console.log("Got rakel state: " + JSON.stringify(rakelState))
+    if (rakelState?.msisdn) {
+        sendRakelState(rakelState);
+    }
+});
+
+evam.onNewOrUpdatedVehicleState((vehicleState) => {
+    console.log("Got vehicle state: " + JSON.stringify(vehicleState))
+    if (vehicleState?.activeCaseFullId) {
+        sendState(vehicleState);
+    }
+});
 
 evam.onNewOrUpdatedSettings((settings) => {
     console.log("Got settings: " + JSON.stringify(settings))
-})
+});
 
+evam.onNewOrUpdatedTripLocationHistory((tripLocationHistory) => {
+    console.log("Got trip location history: " + JSON.stringify(tripLocationHistory))
+    if (tripLocationHistory?.etaSeconds) {
+        sendTripLocationHistory(tripLocationHistory);
+    }
+});
+
+
+const ipAddress = evam.store.get('IpAddress');
+const port = evam.store.get('Port');
+const communicationBaseURL = 'http://' + ipAddress + ':' + port + '/api/'
+evam.store.set('IpAddress', '192.168.50.15');
+evam.store.set('Port', '8080');
 /**
  * Main app component
  */
@@ -132,6 +170,8 @@ function App() {
                         <EvamTabs>
                             <EvamTab label={"Vindruterapport"} index={0} icon={<Summarize fontSize={"medium"} />} />
                             <EvamTab label={"Status"} index={1} icon={<Info fontSize={"medium"} />} />
+                            <EvamTab label={"Status"} index={2} icon={<Info fontSize={"medium"} />} />
+                            <EvamTab label={"Status"} index={3} icon={<Info fontSize={"medium"} />} />
                         </EvamTabs>
                     } >
                         <Routes>
@@ -151,41 +191,173 @@ type CreateUserResponse = {
     job: string;
     id: string;
     createdAt: string;
-  };
-  
-  async function createOperation(operation: Operation | undefined) {
+};
+
+async function sendOperation(operation: Operation | undefined) {
     try {
-      // 👇️ const response: Response
-      var obj = {"json":JSON.stringify(operation), "operationid":operation?.operationID};
-      console.log(obj)
-      const response = await fetch('http://192.168.72.161:8080/api/operations', {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-  
-      // 👇️ const result: CreateUserResponse
-      const result = (await response.json()) as CreateUserResponse;
-  
-      console.log('result is: ', JSON.stringify(result, null, 4));
-  
-      return result;
+        var obj = { "operation": JSON.stringify(operation) };
+        console.log(obj)
+        const response = await fetch('http://192.168.50.15:8080/api/operations', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        // 👇️ const result: CreateUserResponse
+        const result = (await response.json()) as CreateUserResponse;
+
+        console.log('result is: ', JSON.stringify(result, null, 4));
+
+        return result;
     } catch (error) {
-      if (error instanceof Error) {
-        console.log('error message: ', error.message);
-        return error.message;
-      } else {
-        console.log('unexpected error: ', error);
-        return 'An unexpected error occurred';
-      }
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
     }
-  }
+}
+
+async function sendState(vehicleState: VehicleState | undefined) {
+    try {
+        var obj = { "vehicleState": JSON.stringify(vehicleState) };
+        console.log(obj)
+        const response = await fetch('http://192.168.50.15:8080/api/vehiclestate', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        const result = (await response.json()) as CreateUserResponse;
+
+        console.log('result is: ', JSON.stringify(result, null, 4));
+
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
+    }
+}
+
+async function sendRakelState(rakelState: RakelState | undefined) {
+    try {
+        var obj = { "rakelState": JSON.stringify(rakelState) };
+        console.log(obj)
+        const response = await fetch('http://192.168.50.15:8080/api/rakelstate', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        const result = (await response.json()) as CreateUserResponse;
+
+        console.log('result is: ', JSON.stringify(result, null, 4));
+
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
+    }
+}
+
+async function sendAvailableVehicleStatusList(vehicleStatus: VehicleStatus[] | undefined) {
+    try {
+        var obj = { "vehicleStatus": JSON.stringify(vehicleStatus) };
+        console.log(obj)
+        const response = await fetch('http://192.168.50.15:8080/api/vehiclestatus', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        const result = (await response.json()) as CreateUserResponse;
+
+        console.log('result is: ', JSON.stringify(result, null, 4));
+
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
+    }
+}
+
+async function sendTripLocationHistory(tripLocationHistory: TripLocationHistory | undefined) {
+    try {
+        var obj = { "tripLocationHistory": JSON.stringify(tripLocationHistory) };
+        console.log(obj)
+        const response = await fetch('http://192.168.50.15:8080/api/triplocationhistory', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        const result = (await response.json()) as CreateUserResponse;
+
+        console.log('result is: ', JSON.stringify(result, null, 4));
+
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'An unexpected error occurred';
+        }
+    }
+}
 
 export default App;
+

@@ -1,5 +1,5 @@
 import { EvamTabPanel } from "@evam-life/sdk/sdk/component/appbar/EvamTabPanel";
-import { Button, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { EvamApi, Notification, NotificationType } from "@evam-life/sdk";
 import AllvarligHandelse from "../components/AllvarligHandelse";
 import AnkomstvagHindrad from "../components/AnkomstvagHindrad";
@@ -9,8 +9,10 @@ import ExaktLokalisation from "../components/ExaktLokalisation";
 import NumerarAvDrabbade from "../components/NumerarAvDrabbade";
 import ExtraResurser from "../components/ExtraResurser";
 import Status from "../components/Status";
+import React, { useState } from "react";
 
 export function MainView() {
+    const evamApi = new EvamApi();  
 
     return (
         <div>
@@ -60,6 +62,14 @@ export function MainView() {
 
                         evamApi.sendNotification(notification);
                     }}>Send notification</Button>
+                </div>
+            </EvamTabPanel>
+            <EvamTabPanel index={3}>
+                <div>
+                    <Typography variant={"h2"}>Inställningar</Typography>
+                    <Typography variant={"h4"}>Click the button below to send a notification using the Evam SDK.</Typography>
+                    <Button variant={"contained"} onClick={() => {
+                    }}>Spara Inställningar</Button>
                 </div>
             </EvamTabPanel>
         </div>

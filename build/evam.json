@@ -1,25 +1,27 @@
 {
-    "applicationId": "com.example.application",
-    "applicationName": "Demo application",
-    "settings": [
-        {
-            "id": "debug",
-            "name": "Debug mode",
-            "description": "Enable debug mode by displaying logs on screen",
-            "value": {
-                "type": "bool",
-                "default": false
-            }
-        }
-    ],
-    "logo": "logo.png",
-    "apiVersion": {
-        "target": "1",
-        "minimum": "1"
-    },
-    "permissions": [
-        "ACTIVE_OPERATION_READ",
-        "SETTINGS_READ",
-        "DISPLAY_MODE_READ"
-    ]
+  "applicationId": "com.dedalus.amphi",
+  "applicationName": "Amphi",
+  "settings": [
+    {
+      "id": "debug",
+      "name": "Debug mode",
+      "description": "Enable debug mode by displaying logs on screen",
+      "value": {
+        "type": "bool",
+        "default": false
+      }
+    }
+  ],
+  "logo": "203162.png",
+  "apiVersion": {
+    "target": "2.5.2",
+    "minimum": "2"
+  },
+  "permissions": [
+    "ACTIVE_OPERATION_READ",
+    "SETTINGS_READ",
+    "DISPLAY_MODE_READ"
+  ],
+  "version": "0.0.1",
+  "versionCode": 1
 }
