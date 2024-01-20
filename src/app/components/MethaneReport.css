@@ -1,0 +1,53 @@
+.flex-container {
+    display: flex;
+    height: 100%;
+}
+
+.container-center {
+    margin: auto;
+    height: 100%;
+    width: 400px;
+}
+
+.flex-container-counters {
+    align-items: center;
+    display: flex;
+    width: 400px;
+    height: 82px;
+}
+
+.btn-counters {
+    width: 76px;
+    text-align: center;
+    margin: 20px;
+    height: 76px;
+}
+
+.flex-container-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    /*    border: 2px solid yellow; */
+}
+
+.container-component {
+    height: 100%;
+}
+
+.container-footer {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+}
+
+.container-header {
+    height: 80px;
+}
+
+.btn-select {
+    width: 32%;
+    text-align: center;
+    margin: 10px;
+    height: 76px;
+}

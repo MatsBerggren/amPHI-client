@@ -9,6 +9,7 @@
 }
 
 .container {
+/*  border: 2px solid red; */
   margin: auto;
   width: 100%;
   padding: .5em;
@@ -32,6 +33,7 @@
   width: 100%;
   text-align: center;
   margin: 20px;
+  height: 76px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
