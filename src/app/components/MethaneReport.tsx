@@ -34,7 +34,7 @@ const MethaneReport: React.FC = () => {
         console.log(methane);
         try {
             const obj = { "methaneReport": JSON.stringify(methane) };
-            const response = await fetch(`https://192.168.50.25:8443/api/methanereport`, {
+            const response = await fetch(`https://FRAUA011243.styxacc.sll.se:8443/api/methanereport`, {
                 method: 'POST',
                 body: JSON.stringify(obj),
                 headers: {
@@ -58,14 +58,12 @@ const MethaneReport: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="container flex-container" >
-                <div className="container container-33">
+            <div className="container" >
+                <div className="container">
                     <Stepper activeStep={activeStep}>
                         {steps.map((step, index) => (
                             <Step key={step.label}>
-                                <StepLabel>
-                                    
-                                </StepLabel>
+                                <StepLabel />
                             </Step>
                         ))}
                     </Stepper>
@@ -75,7 +73,7 @@ const MethaneReport: React.FC = () => {
                     <StepComponent methane={methane} onChange={setMethane} />
                 </div>
             </div>
-            <div className="container flex-container">
+            <div className="container-footer">
                 <Button
                     sx={{ m: 0.5, borderRadius: 10 }}
                     className='btn'

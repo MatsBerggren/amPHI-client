@@ -35,18 +35,18 @@ const NumbersAffected: React.FC<{ methane: Methane, onChange: (value: Methane) =
     };
 
     return (
-        <div className='container-center'>
-                {buttons.map(button => (
-                    <div className="flex-container-counters">
-                        <ButtonGroup>
-                            <Button className="btn-counters" onClick={() => updateCount(button.id, false)}>-</Button>
-                            <Button className="btn-counters">{button.count}</Button>
-                            <Button className="btn-counters" onClick={() => updateCount(button.id, true)}>+</Button>
-                        </ButtonGroup>
-                        <Typography sx={{ marginLeft: 2 }} id={button.id}>{button.text}</Typography>
-                    </div>
-                ))}
-            </div>
+        <div className='flex-container-wrap'>
+            {buttons.map(button => (
+                <div className="flex-container-counters">
+                    <ButtonGroup>
+                        <Button className="btn-counters" onClick={() => updateCount(button.id, false)}>-</Button>
+                        <Button className="btn-counters">{button.count}</Button>
+                        <Button className="btn-counters" onClick={() => updateCount(button.id, true)}>+</Button>
+                    </ButtonGroup>
+                    <Typography sx={{ marginLeft: 2 }} id={button.id}>{button.text}</Typography>
+                </div>
+            ))}
+        </div>
     );
 };
 

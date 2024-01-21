@@ -10,10 +10,9 @@
 }
 
 .flex-container-counters {
+    margin: auto;
     align-items: center;
-    display: flex;
-    width: 400px;
-    height: 82px;
+    width: 30%;
 }
 
 .btn-counters {
@@ -26,18 +25,20 @@
 .flex-container-wrap {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
     height: 100%;
-    /*    border: 2px solid yellow; */
 }
 
 .container-component {
     height: 100%;
+    border: 2px solid green;
 }
 
 .container-footer {
     display: flex;
     position: absolute;
     bottom: 0;
+    width: 50%;
     height: 100px;
 }
 

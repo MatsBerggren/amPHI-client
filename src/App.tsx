@@ -14,7 +14,7 @@ import createAppTheme from './theme/createAppTheme';
 
 // Get Evam SDK instance
 const evam = new EvamApi()
-const communicationBaseURL = 'https://192.168.50.25:8443/api/'
+const communicationBaseURL = 'https://FRAUA011243.styxacc.sll.se:8443/api/'
 
 evam.onNewOrUpdatedActiveOperation((operation) => {
     store.dispatch(setActiveCase(operation));
@@ -60,9 +60,7 @@ function App() {
                     <EvamAppBarLayout tabs={
                         <EvamTabs>
                             <EvamTab label={"Vindruterapport"} index={0} icon={<Summarize fontSize={"medium"} />} />
-                            <EvamTab label={"Status"} index={1} icon={<Info fontSize={"medium"} />} />
-                            <EvamTab label={"Status"} index={2} icon={<Info fontSize={"medium"} />} />
-                            <EvamTab label={"Status"} index={3} icon={<Info fontSize={"medium"} />} />
+                            <EvamTab label={"Inställningar"} index={1} icon={<Info fontSize={"medium"} />} />
                         </EvamTabs>
                     } >
                         <Routes>

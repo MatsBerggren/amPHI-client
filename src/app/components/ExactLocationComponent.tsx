@@ -8,6 +8,8 @@ const ExactLocationComponent: React.FC<{ methane: Methane, onChange: (value: Met
     return (
         <div className='container'>
                 <TextField
+                    fullWidth
+                    focused
                     id="message"
                     name="met"
                     type="text"
