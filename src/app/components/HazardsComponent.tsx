@@ -36,7 +36,7 @@ const initialButtons: ButtonProps[] = buttonLabels.map((text, index) => ({
  */
 const HazardsComponent: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
     const [buttons, setButtons] = useState<ButtonProps[]>(initialButtons);
-    const [hazards, setHazards] = useState<string[]>([]);
+    const [, setHazards] = useState<string[]>([]);
 
     /**
      * Function to handle button click events

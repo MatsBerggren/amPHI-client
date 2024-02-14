@@ -36,7 +36,7 @@ const initialButtons: ButtonProps[] = buttonLabels.map((text, index) => ({
  */
 const TypesComponent: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
     const [buttons, setButtons] = useState<ButtonProps[]>(initialButtons);
-    const [types, setSelectedTypes] = useState<string[]>([]);
+    const [, setSelectedTypes] = useState<string[]>([]);
 
     /**
      * Function to handle button click events

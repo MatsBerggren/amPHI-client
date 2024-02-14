@@ -30,7 +30,7 @@ const MajorIncidentComponent: React.FC<{ methane: Methane, onChange: (value: Met
    * State for the buttons and majorIncident
    */
   const [buttons, setButtons] = useState(initialState);
-  const [majorIncident, setMajorIncident] = useState(false);
+  const [, setMajorIncident] = useState(false);
 
   /**
    * Function to update the variant of each button and the majorIncident state

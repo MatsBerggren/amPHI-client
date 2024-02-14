@@ -1,5 +1,5 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import Methane from '../classes/Methane';
 import AccessRoadComponent from './AccessRoadComponenet';

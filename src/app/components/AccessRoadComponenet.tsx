@@ -16,7 +16,7 @@ const AccessRoadComponent: React.FC<{ methane: Methane, onChange: (value: Methan
     ];
 
     const [buttons, setButtons] = useState(initialState);
-    const [isObstructed, setIsObstructed] = useState(false);
+    const [, setIsObstructed] = useState(false);
 
     const updateButtonVariant = (id: string) => {
         return buttons.map(button => ({

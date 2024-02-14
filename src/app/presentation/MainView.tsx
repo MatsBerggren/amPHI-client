@@ -1,4 +1,3 @@
-import { EvamApi, Notification, NotificationType } from "@evam-life/sdk";
 import { EvamTabPanel } from "@evam-life/sdk/sdk/component/appbar/EvamTabPanel";
 import { Button, Typography } from "@mui/material";
 import MethaneReport from "../components/MethaneReport";
