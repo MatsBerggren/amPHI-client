@@ -1,0 +1,38 @@
+{
+  "applicationId": "com.dedalus.amphi",
+  "applicationName": "Amphi",
+  "settings": [
+    {
+      "id": "debug",
+      "name": "Debug mode",
+      "description": "Enable debug mode by displaying logs on screen",
+      "value": {
+        "type": "bool",
+        "default": false
+      }
+    }
+  ],
+  "logo": "203162.png",
+  "apiVersion": {
+    "target": "2.5.2",
+    "minimum": "2"
+  },
+  "permissions": [
+  "ACTIVE_OPERATION_READ",
+  "ACTIVE_OPERATION_WRITE",
+  "AVAILABLE_VEHICLE_STATUS_LIST_READ",
+  "BATTERY_READ",
+  "CONNECTIVITY_READ",
+  "DEVICE_ROLE_READ",
+  "DISPLAY_MODE_READ",
+  "LOCATION_READ",
+  "NAVIGATION_PRIVATE_LAYERS",
+  "OPERATION_READ",
+  "SEND_NOTIFICATION",
+  "SETTINGS_READ",
+  "TRIP_HISTORY_READ",
+  "VEHICLE_STATE_READ"
+  ],
+  "version": "0.0.1",
+  "versionCode": 1
+}
