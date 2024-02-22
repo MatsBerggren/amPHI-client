@@ -8,14 +8,21 @@ interface ButtonItem {
     count: number;
 }
 
-const BUTTON_ITEMS: ButtonItem[] = [
+const initialButtons: ButtonItem[] = [
     { text: "Grön", id: '0', count: 0 },
     { text: "Gul", id: '1', count: 0 },
     { text: "Röd", id: '2', count: 0 },
 ];
 
 const NumbersAffected: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
-    const [buttons, setButtons] = useState<ButtonItem[]>(BUTTON_ITEMS);
+    const [buttons, setButtons] = useState(() => {
+        if (methane) {
+            initialButtons[0].count = methane.numbers_affected_green? methane.numbers_affected_green : 0;
+            initialButtons[1].count = methane.numbers_affected_yellow? methane.numbers_affected_yellow : 0;
+            initialButtons[2].count = methane.numbers_affected_red? methane.numbers_affected_red : 0;
+        }
+        return initialButtons;
+    });
 
     const updateCount = (id: string, increment: boolean) => {
         const updatedButtons = buttons.map(button =>

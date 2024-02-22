@@ -35,8 +35,18 @@ const initialButtons: ButtonProps[] = buttonLabels.map((text, index) => ({
  * and updates the hazards state accordingly.
  */
 const HazardsComponent: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
-    const [buttons, setButtons] = useState<ButtonProps[]>(initialButtons);
-    const [, setHazards] = useState<string[]>([]);
+    const [buttons, setButtons] = useState(() => {
+        if (methane.hazards) {
+            initialButtons.forEach((button) => {
+                if (methane.hazards.includes(button.text)) {
+                    button.variant = 'contained';
+                } else {
+                    button.variant = 'outlined';
+                }
+            });
+        }
+        return initialButtons;
+    });
 
     /**
      * Function to handle button click events
@@ -49,7 +59,6 @@ const HazardsComponent: React.FC<{ methane: Methane, onChange: (value: Methane) 
         );
         setButtons(updatedButtons as ButtonProps[]);
         const updatedHazards = updatedButtons.filter((button) => button.variant === "contained").map((button) => button.text);
-        setHazards(updatedHazards);
         onChange({ ...methane, hazards: updatedHazards });
     };
 

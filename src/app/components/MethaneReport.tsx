@@ -10,6 +10,7 @@ import MajorIncidentComponent from './MajorIncidentComponent';
 import "./MethaneReport.css";
 import NumberOfAffected from './NumbersAffectedComponent';
 import TypesComponent from './TypesComponent';
+import { EvamApi } from '@evam-life/sdk';
 
 const steps = [
     { label: 'Större händelse?', component: MajorIncidentComponent },
@@ -20,6 +21,13 @@ const steps = [
     { label: 'Antal drabbade?', component: NumberOfAffected },
     { label: 'Extra resurser?', component: ExtraResourcesComponent },
 ];
+
+// const evam = new EvamApi();
+// const amPHIHostName = evam.store.get('amPHIHostName');
+// const communicationBaseURL = 'https://' + amPHIHostName + '/api/';
+const communicationBaseURL = 'https://amphi.styxacc.sll.se:8443/api/';
+
+console.log('communicationBaseURL: ', communicationBaseURL);
 
 const MethaneReport: React.FC = () => {
     const [methane, setMethane] = useState<Methane>({} as Methane);
@@ -34,8 +42,7 @@ const MethaneReport: React.FC = () => {
         console.log(methane);
         try {
             const obj = { "methaneReport": JSON.stringify(methane) };
-            const response = await fetch(`https://FRAUA011243.styxacc.sll.se:8443/api/methanereport`, {
-//            const response = await fetch(`https://SCPF4BJ6QA.scandihealth.com:8443/api/methanereport`, {
+            const response = await fetch(`${communicationBaseURL}methanereport`, {
                 method: 'POST',
                 body: JSON.stringify(obj),
                 headers: {
@@ -61,13 +68,6 @@ const MethaneReport: React.FC = () => {
         <form onSubmit={handleSubmit}>
             <div className="container" >
                 <div className="container">
-                    {/* <Stepper activeStep={activeStep}>
-                        {steps.map((step, index) => (
-                            <Step key={step.label}>
-                                <StepLabel />
-                            </Step>
-                        ))}
-                    </Stepper> */}
                     <Typography variant={"h4"}>{steps[activeStep].label}</Typography>
                 </div>
                 <div className='container flex-container'>
@@ -84,7 +84,7 @@ const MethaneReport: React.FC = () => {
                     variant={"contained"}
                 >
                     <KeyboardArrowLeft />
-                    Back
+                    <KeyboardArrowLeft />
                 </Button>
                 <Button
                     style={{ fontSize: '25px', fontWeight: 'bold', borderWidth: 3 }}
@@ -103,7 +103,7 @@ const MethaneReport: React.FC = () => {
                     disabled={activeStep === maxSteps - 1}
                     variant={"contained"}
                 >
-                    Next
+                    <KeyboardArrowRight />
                     <KeyboardArrowRight />
                 </Button>
             </div>

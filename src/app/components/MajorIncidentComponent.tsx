@@ -2,69 +2,81 @@
  * Importing required components and hooks from libraries
  */
 import { Button } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import Methane from '../classes/Methane';
 
 /**
- * ButtonState interface to define the structure of state for each button
+ * Interface for the Button properties
  */
-interface ButtonState {
+interface ButtonProps {
   text: string;
   id: string;
   variant: "outlined" | "text" | "contained";
 }
 
 /**
- * Initial state for the buttons
+ * Array of button labels
  */
-const initialState: ButtonState[] = [
-  { text: 'Ja', id: '1', variant: 'outlined' },
-  { text: 'Nej', id: '2', variant: 'outlined' }
-];
+const buttonLabels = ["Ja", "Nej"];
+
+/**
+ * Initial state of the buttons
+ */
+const initialButtons: ButtonProps[] = buttonLabels.map((text, index) => ({
+  text,
+  id: (index + 1).toString(),
+  variant: 'outlined',
+}));
 
 /**
  * MajorIncidentComponent is a functional component that receives methane and onChange as props
  */
 const MajorIncidentComponent: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
-  /**
-   * State for the buttons and majorIncident
-   */
-  const [buttons, setButtons] = useState(initialState);
-  const [, setMajorIncident] = useState(false);
+  const [buttons, setButtons] = useState(() => {
+    if (methane.major_incident!==undefined) {
+        if (methane.major_incident===true) {
+          initialButtons[0].variant = 'contained';
+          initialButtons[1].variant = 'outlined';
+        } else {
+          initialButtons[0].variant = 'outlined';
+          initialButtons[1].variant = 'contained';
+        }
+    }
+    return initialButtons;
+  });
 
   /**
-   * Function to update the variant of each button and the majorIncident state
+   * Function to handle button click events
    */
-  const updateButtonVariant = useCallback((id: string) => {
+  const handleClick = (id: string): void => {
     setButtons(buttons => buttons.map(button => ({
       ...button,
       variant: button.id === id ? 'contained' : 'outlined'
     })));
     const isMajorIncident = id === '1';
-    setMajorIncident(isMajorIncident);
     onChange({ ...methane, major_incident: isMajorIncident });
-  }, [onChange, methane]);
+  };
 
   /**
    * Render the component
    */
   return (
-      <div className='container'>
-        {buttons.map(button => (
-          <Button
-            style={{ fontSize: '25px', fontWeight: 'bold', borderWidth: 3 }}
-            className='btn-select'
-            key={`MajorIncident${button.id}`}
-            sx={{ m: 0.5, borderRadius: 10 }}
-            id={`MajorIncident${button.id}`}
-            type='button'
-            variant={button.variant}
-            onClick={() => updateButtonVariant(button.id)}
-          >
-            {button.text}
-          </Button>
-        ))}
-      </div>
+    <div className='container'>
+      {buttons.map(button => (
+        <Button
+          style={{ fontSize: '25px', fontWeight: 'bold', borderWidth: 3 }}
+          className='btn-select'
+          key={`MajorIncident${button.id}`}
+          sx={{ m: 0.5, borderRadius: 10 }}
+          id={`MajorIncident${button.id}`}
+          type='button'
+          variant={button.variant}
+          onClick={() => handleClick(button.id)}
+        >
+          {button.text}
+        </Button>
+      ))}
+    </div>
   );
 };
 

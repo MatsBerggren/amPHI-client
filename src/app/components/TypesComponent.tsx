@@ -2,7 +2,7 @@
  * Importing necessary libraries and components
  */
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Methane from "../classes/Methane";
 
 /**
@@ -35,9 +35,19 @@ const initialButtons: ButtonProps[] = buttonLabels.map((text, index) => ({
  * and updates the hazards state accordingly.
  */
 const TypesComponent: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
-    const [buttons, setButtons] = useState<ButtonProps[]>(initialButtons);
-    const [, setSelectedTypes] = useState<string[]>([]);
-
+    const [buttons, setButtons] = useState(() => {
+        if (methane.types) {
+            initialButtons.forEach((button) => {
+                if (methane.types.includes(button.text)) {
+                    button.variant = 'contained';
+                } else {
+                    button.variant = 'outlined';
+                }
+            });
+        }
+        return initialButtons;
+    });
+    
     /**
      * Function to handle button click events
      */
@@ -49,7 +59,6 @@ const TypesComponent: React.FC<{ methane: Methane, onChange: (value: Methane) =>
         );
         setButtons(updatedButtons as ButtonProps[]);
         const updatedTypes = updatedButtons.filter((button) => button.variant === "contained").map((button) => button.text);
-        setSelectedTypes(updatedTypes);
         onChange({ ...methane, types: updatedTypes });
     };
 

@@ -3,33 +3,53 @@ import React, { useState } from "react";
 import Methane from "../classes/Methane";
 import AccessRoad from "../classes/AccessRoad";
 
-interface ButtonState {
+/**
+ * Interface for the Button properties
+ */
+interface ButtonProps {
     text: string;
     id: string;
     variant: "outlined" | "text" | "contained";
 }
 
+/**
+ * Array of button labels
+ */
+const buttonLabels = ["Ja", "Nej"];
+
+/**
+ * Initial state of the buttons
+ */
+const initialButtons: ButtonProps[] = buttonLabels.map((text, index) => ({
+    text,
+    id: (index + 1).toString(),
+    variant: 'outlined',
+}));
+
 const AccessRoadComponent: React.FC<{ methane: Methane, onChange: (value: Methane) => void }> = ({ methane, onChange }) => {
-    const initialState: ButtonState[] = [
-        { text: 'Ja', id: '1', variant: 'outlined' },
-        { text: 'Nej', id: '2', variant: 'outlined' }
-    ];
+    const [buttons, setButtons] = useState(() => {
+        if (methane.access_road) {
+            if (methane.access_road.is_obstructed === true) {
+                initialButtons[0].variant = 'contained';
+                initialButtons[1].variant = 'outlined';
+            } else {
+                initialButtons[0].variant = 'outlined';
+                initialButtons[1].variant = 'contained';
+            }
+        }
+        return initialButtons;
+    });
 
-    const [buttons, setButtons] = useState(initialState);
-    const [, setIsObstructed] = useState(false);
-
-    const updateButtonVariant = (id: string) => {
-        return buttons.map(button => ({
+    /**
+     * Function to handle button click events
+     */
+    const handleClick = (id: string): void => {
+        setButtons(buttons => buttons.map(button => ({
             ...button,
             variant: button.id === id ? 'contained' : 'outlined'
-        }));
-    };
+        })));
 
-    const handleClick = (id: string) => {
-        setButtons(updateButtonVariant(id) as ButtonState[]);
         const obstructionStatus = id === '1';
-        setIsObstructed(obstructionStatus);
-        
         const accessRoad: AccessRoad = {
             is_obstructed: obstructionStatus,
             comment: ""

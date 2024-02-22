@@ -13,9 +13,14 @@ import { setActiveCase } from './features/operation';
 import createAppTheme from './theme/createAppTheme';
 
 // Get Evam SDK instance
-const evam = new EvamApi()
-const communicationBaseURL = 'https://FRAUA011243.styxacc.sll.se:8443/api/'
-//const communicationBaseURL = 'https://SCPF4BJ6QA.scandihealth.com:8443/api/'
+const evam = new EvamApi();
+
+// const amPHIHostName = evam.store.get('amPHIHostName');
+// evam.store.set('amPHIHostName', 'FRAUA011243.styxacc.sll.se:8443');
+// evam.store.set('smtpServer', '');
+// evam.store.set('useMail', 'false');
+// const communicationBaseURL = 'https://' + amPHIHostName + '/api/';
+const communicationBaseURL = 'https://amphi.styxacc.sll.se:8443/api/';
 
 evam.onNewOrUpdatedActiveOperation((operation) => {
     console.log(`Updated Operation from SDK: ${JSON.stringify(operation)}`)
@@ -66,7 +71,6 @@ function App() {
                     <EvamAppBarLayout tabs={
                         <EvamTabs>
                             <EvamTab label={"Vindruterapport"} index={0} icon={<Summarize fontSize={"medium"} />} />
-                            <EvamTab label={"Inställningar"} index={1} icon={<Info fontSize={"medium"} />} />
                         </EvamTabs>
                     } >
                         <Routes>
