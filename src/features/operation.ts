@@ -79,11 +79,11 @@ if (!EvamApi.isRunningInVehicleServices) {
       categoryName: "SOS",
     },
   ];
-  
+
   const vehicleStatus = vehicleStatusList[0];
-  
+
   const operation = Operation.fromJSON({
-    operationID: "4",
+    operationID: "8",
     patientName: "Test Testman",
     operationState: OperationState.ACTIVE,
     patientUID: "1910101010-1010",
@@ -144,12 +144,13 @@ if (!EvamApi.isRunningInVehicleServices) {
       evam.injectSettings(
         { debug: true }
       )
-    }, 10000
+    }, 8000
   )
   // Simulate the reception of an active case 5s after the app starts
   setTimeout(() => {
 
     evam.injectOperation(operation);
+    evam.injectOperationList([operation]);
     evam.injectVehicleState(
       VehicleState.fromJSON({
         timestamp: new Date(),
@@ -178,6 +179,32 @@ if (!EvamApi.isRunningInVehicleServices) {
 
   setTimeout(
     () => {
+      const vehicleStatus = vehicleStatusList[2];
+      evam.injectVehicleState(
+        VehicleState.fromJSON({
+          timestamp: new Date().getTime() + 1000,
+          activeCaseFullId: operation.getFullId(),
+          vehicleLocation: vehicleLocation,
+          vehicleStatus: vehicleStatus,
+        })
+      );
+    }, 30000);
+
+  setTimeout(
+    () => {
+      const vehicleStatus = vehicleStatusList[3];
+      evam.injectVehicleState(
+        VehicleState.fromJSON({
+          timestamp: new Date().getTime() + 1000,
+          activeCaseFullId: operation.getFullId(),
+          vehicleLocation: vehicleLocation,
+          vehicleStatus: vehicleStatus,
+        })
+      );
+    }, 30000);
+
+  setTimeout(
+    () => {
       const vehicleStatus = vehicleStatusList[4];
       evam.injectVehicleState(
         VehicleState.fromJSON({
@@ -187,7 +214,7 @@ if (!EvamApi.isRunningInVehicleServices) {
           vehicleStatus: vehicleStatus,
         })
       );
-    }, 20000);
+    }, 50000);
 
   // You can add more events like the one above here to be run afterward
 }

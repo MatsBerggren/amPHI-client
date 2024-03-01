@@ -1,10 +1,10 @@
 import './App.css';
 
-import { EvamApi, Operation, RakelState, TripLocationHistory, VehicleState, VehicleStatus } from "@evam-life/sdk";
+import { EvamApi } from "@evam-life/sdk";
 import { EvamAppBarLayout } from "@evam-life/sdk/sdk/component/appbar/EvamAppBarLayout";
 import { EvamTab } from "@evam-life/sdk/sdk/component/appbar/EvamTab";
 import { EvamTabs } from "@evam-life/sdk/sdk/component/appbar/EvamTabs";
-import { Info, Summarize } from "@mui/icons-material";
+import { Summarize } from "@mui/icons-material";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { MainView } from "./app/presentation/MainView";
@@ -12,38 +12,55 @@ import { store } from './app/store';
 import { setActiveCase } from './features/operation';
 import createAppTheme from './theme/createAppTheme';
 
-// Get Evam SDK instance
 const evam = new EvamApi();
-
-// const amPHIHostName = evam.store.get('amPHIHostName');
-// evam.store.set('amPHIHostName', 'FRAUA011243.styxacc.sll.se:8443');
-// evam.store.set('smtpServer', '');
-// evam.store.set('useMail', 'false');
-// const communicationBaseURL = 'https://' + amPHIHostName + '/api/';
 const communicationBaseURL = 'https://amphi.styxacc.sll.se:8443/api/';
+
+const sendToApi = async (endpoint, data) => {
+    try {
+        const response = await fetch(`${communicationBaseURL}${endpoint}`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error: ', error instanceof Error ? error.message : 'An unexpected error occurred');
+        return error instanceof Error ? error.message : 'An unexpected error occurred';
+    }
+}
 
 evam.onNewOrUpdatedActiveOperation((operation) => {
     console.log(`Updated Operation from SDK: ${JSON.stringify(operation)}`)
     store.dispatch(setActiveCase(operation));
-    if (operation?.operationID) {
-        operation.selectedHospital = 1;
-        sendOperation(operation);
-    }
+    sendToApi('operations', { "operation": JSON.stringify(operation) });
+});
+
+evam.onNewOrUpdatedOperationList((operationList) => {
+    console.log(`Updated OperationList from SDK: ${JSON.stringify(operationList)}`)
+    operationList?.length && sendToApi('operationlist', { "operationlist": JSON.stringify(operationList) });
 });
 
 evam.onNewOrUpdatedAvailableVehicleStatusList(vehicleStatusList => {
     console.log(`Updated Vehicle Status list from SDK: ${JSON.stringify(vehicleStatusList)}`)
-    vehicleStatusList?.length && sendAvailableVehicleStatusList(vehicleStatusList);
+    vehicleStatusList?.length && sendToApi('vehiclestatus', { "vehicleStatus": JSON.stringify(vehicleStatusList) });
 });
 
 evam.onNewOrUpdatedRakelState(rakelState => {
     console.log(`Updated Rakel State from SDK: ${JSON.stringify(rakelState)}`)
-    rakelState?.msisdn && sendRakelState(rakelState);
+    rakelState?.msisdn && sendToApi('rakelstate', { "rakelState": JSON.stringify(rakelState) });
 });
 
 evam.onNewOrUpdatedVehicleState((vehicleState) => {
     console.log(`Updated Vehicle State from SDK: ${JSON.stringify(vehicleState)}`)
-    vehicleState?.activeCaseFullId && sendState(vehicleState);
+    vehicleState?.activeCaseFullId && sendToApi('vehiclestate', { "vehicleState": JSON.stringify(vehicleState) });
 });
 
 evam.onNewOrUpdatedSettings((settings) => {
@@ -52,17 +69,12 @@ evam.onNewOrUpdatedSettings((settings) => {
 
 evam.onNewOrUpdatedTripLocationHistory((tripLocationHistory) => {
     console.log(`Updated Trip location history from SDK: ${JSON.stringify(tripLocationHistory)}`)
-    tripLocationHistory?.etaSeconds && sendTripLocationHistory(tripLocationHistory);
+    tripLocationHistory?.etaSeconds && sendToApi('triplocationhistory', { "tripLocationHistory": JSON.stringify(tripLocationHistory) });
 });
 
-/**
- * Main app component
- */
 function App() {
-
-    // Define theme
     const theme = createAppTheme();
-    
+
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
@@ -85,119 +97,4 @@ function App() {
     );
 }
 
-async function sendOperation(operation: Operation | undefined) {
-    try {
-        const obj = { "operation": JSON.stringify(operation) };
-        const response = await fetch(`${communicationBaseURL}operations`, {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error occurred: ', error);
-        return error instanceof Error ? error.message : 'An unexpected error occurred';
-    }
-}
-async function sendState(vehicleState: VehicleState | undefined) {
-    try {
-        const obj = { "vehicleState": JSON.stringify(vehicleState) };
-        const response = await fetch(`${communicationBaseURL}vehiclestate`, {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error:', error instanceof Error ? error.message : 'An unexpected error occurred');
-        return error instanceof Error ? error.message : 'An unexpected error occurred';
-    }
-}
-
-async function sendRakelState(rakelState: RakelState | undefined) {
-    try {
-        const obj = { rakelState: JSON.stringify(rakelState) };
-        const response = await fetch(`${communicationBaseURL}rakelstate`, {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error: ', error instanceof Error ? error.message : 'An unexpected error occurred');
-        return error instanceof Error ? error.message : 'An unexpected error occurred';
-    }
-}
-
-async function sendAvailableVehicleStatusList(vehicleStatus: VehicleStatus[] | undefined) {
-    try {
-        const obj = { "vehicleStatus": JSON.stringify(vehicleStatus) };
-        const response = await fetch(`${communicationBaseURL}vehiclestatus`, {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error: ', error instanceof Error ? error.message : 'An unexpected error occurred');
-        return error instanceof Error ? error.message : 'An unexpected error occurred';
-    }
-}
-
-async function sendTripLocationHistory(tripLocationHistory: TripLocationHistory | undefined) {
-    try {
-        const obj = { "tripLocationHistory": JSON.stringify(tripLocationHistory) };
-        const response = await fetch(`${communicationBaseURL}triplocationhistory`, {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error: ', error instanceof Error ? error.message : 'An unexpected error occurred');
-        return error instanceof Error ? error.message : 'An unexpected error occurred';
-    }
-}
-
 export default App;
-

@@ -1,3 +1,4 @@
 {
-    "CodeGPT.Autocomplete.maxTokens": 2500
+    "CodeGPT.Autocomplete.maxTokens": 2500,
+    "CodeGPT.apiKey": "OpenAI"
 }
