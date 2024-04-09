@@ -83,7 +83,7 @@ if (!EvamApi.isRunningInVehicleServices) {
   const vehicleStatus = vehicleStatusList[0];
 
   const operation = Operation.fromJSON({
-    operationID: "8",
+    operationID: "9",
     patientName: "Test Testman",
     operationState: OperationState.ACTIVE,
     patientUID: "1910101010-1010",
@@ -121,7 +121,6 @@ if (!EvamApi.isRunningInVehicleServices) {
       },
     ],
     caseInfo: "Trafikolycka, bil krockat med moped",
-    selectedHospital: "",
     vehicleStatus: vehicleStatus,
     radioGroupMain: "240-1-9230022",
     radioGroupSecondary: "240-1-9888565",
@@ -137,6 +136,8 @@ if (!EvamApi.isRunningInVehicleServices) {
     sendTime: new Date().getTime() - 5 * 1000 * 60,
     createdTime: new Date().getTime() - 10 * 1000 * 60,
     acceptedTime: new Date().getTime(),
+    assignedResourceMissionNo: "339-3090\u00161",
+    operationUnits: [ { unitId: "1", status: "På väg", source: "RAKEL" }, { unitId: "2", status: "På plats", source: "RAKEL" }],
   });
 
   setTimeout(
@@ -150,7 +151,7 @@ if (!EvamApi.isRunningInVehicleServices) {
   setTimeout(() => {
 
     evam.injectOperation(operation);
-    evam.injectOperationList([operation]);
+    //evam.injectOperationList([operation]);
     evam.injectVehicleState(
       VehicleState.fromJSON({
         timestamp: new Date(),

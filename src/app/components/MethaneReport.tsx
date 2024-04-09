@@ -10,7 +10,6 @@ import MajorIncidentComponent from './MajorIncidentComponent';
 import "./MethaneReport.css";
 import NumberOfAffected from './NumbersAffectedComponent';
 import TypesComponent from './TypesComponent';
-import { EvamApi } from '@evam-life/sdk';
 
 const steps = [
     { label: 'Större händelse?', component: MajorIncidentComponent },

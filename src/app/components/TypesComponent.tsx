@@ -2,7 +2,7 @@
  * Importing necessary libraries and components
  */
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Methane from "../classes/Methane";
 
 /**

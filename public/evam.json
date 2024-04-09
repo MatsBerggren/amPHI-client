@@ -15,8 +15,8 @@
   ],
   "logo": "203162.png",
   "apiVersion": {
-    "target": "2.5.2",
-    "minimum": "2"
+    "target": "2.7.0",
+    "minimum": "2.7.0"
   },
   "permissions": [
   "ACTIVE_OPERATION_READ",
@@ -32,8 +32,9 @@
   "SEND_NOTIFICATION",
   "SETTINGS_READ",
   "TRIP_HISTORY_READ",
-  "VEHICLE_STATE_READ"
+  "VEHICLE_STATE_READ",
+  "RAKEL_STATE_READ"
   ],
-  "version": "0.0.1",
-  "versionCode": 1
+  "version": "1.0.2",
+  "versionCode": 2
 }
